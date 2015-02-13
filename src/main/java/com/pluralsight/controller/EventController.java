@@ -3,13 +3,16 @@ package com.pluralsight.controller;
 import com.pluralsight.model.Event;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 /**
  * Created by daniel.arlitt on 2/11/15.
  */
 @Controller
+@SessionAttributes("event")
 public class EventController {
 
   @RequestMapping(value = "/event", method = RequestMethod.GET)
@@ -19,6 +22,13 @@ public class EventController {
     model.addAttribute("event", event);
 
     return "event";
+  }
+
+  @RequestMapping(value = "/event", method = RequestMethod.POST)
+  public String processEvent(@ModelAttribute("event") Event event) {
+    System.out.println(event);
+
+    return "redirect:index.html";
   }
 
 }
